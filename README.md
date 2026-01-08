@@ -1,4 +1,4 @@
-# 🎓 Quiz-1: Dinamik Makine Öğrenmesi Projesi
+# Dinamik Makine Öğrenmesi Projesi
 
 ## 📋 Proje Açıklaması
 
