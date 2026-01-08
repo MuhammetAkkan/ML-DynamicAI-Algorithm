@@ -1,0 +1,33 @@
+{
+  "ders": "Makine Öğrenmesi",
+  "duyuru": "Final Proje Sınavı",
+  "bilgilendirme": "Makine Öğrenmesi dersi final sınavı uygulamalı proje şeklinde yapılacaktır.",
+  "tarih_saat": {
+    "tarih": "2 Ocak 2026",
+    "baslangic": "20:00",
+    "sure_dakika": 120,
+    "format": "Online / Uygulamalı Kodlama",
+    "teslim_yeri": "sutef.gen.tr"
+  },
+  "sinav_sureci": [
+    "20:00'da online toplantı ve veri seti paylaşımı",
+    "Veri seti üzerinde Python ile proje görevlerinin tamamlanması",
+    "Çalışmanın .ipynb formatında sisteme yüklenmesi"
+  ],
+  "bolumler": {
+    "Bolum1": "Keşifçi Veri Analizi",
+    "Bolum2": "Veri Ön İşleme",
+    "Bolum3": "Modelleme"
+  },
+  "istenenler": [
+    "EDA: veri inceleme, eksik değer, dağılım ve görselleştirme",
+    "Ön işleme: encoding, scaling",
+    "3 farklı algoritma ile modelleme ve metrik karşılaştırması"
+  ],
+  "ek_dosya": "Hazırlık paketi (csv + proje adımları + örnek çözüm)",
+  "notlandirma": {
+    "odevler": "%40",
+    "final": "%60",
+    "toplam": "100 puan"
+  }
+}
