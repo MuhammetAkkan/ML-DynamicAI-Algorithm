@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🎓 Quiz-1: Dinamik Makine Öğrenmesi Projesi
 
 ## 📋 Proje Açıklaması
@@ -244,3 +245,7 @@ Bu proje eğitim amaçlıdır.
 
 **🎉 Artık herhangi bir veri setiyle çalışabilirsiniz!**
 
+=======
+# ML-Multi-Algo-Resignation-Core
+Veri setlerini dinamik olarak okuyarak Logistic Regression, Random Forest ve XGBoost algoritmalarıyla analiz eder ve sonuçları karşılaştırmalı olarak listeler. Kolon yapısı otomatik algılanır; veri setinde ilgili alanın bulunamadığı durumlarda tek seferlik manuel yapılandırma desteği sunar
+>>>>>>> d1da86ac138315deea0f13d8d2870fc2bcb0ad0b
