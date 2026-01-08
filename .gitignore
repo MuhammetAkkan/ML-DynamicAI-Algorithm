@@ -1,0 +1,25 @@
+# Byte-compiled / cache dosyaları
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Sanal ortamlar
+.venv/
+venv/
+ENV/
+env/
+*.env
+
+# Jupyter Notebook çıktı dosyaları
+.ipynb_checkpoints
+
+# IDE dosyaları
+.vscode/
+.idea/
+
+# Çeşitli
+.DS_Store
+*.log
+
+# Kişisel ayarlar
+*.swp
