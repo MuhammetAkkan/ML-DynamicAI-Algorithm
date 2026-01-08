@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🎓 Quiz-1: Dinamik Makine Öğrenmesi Projesi
 
 ## 📋 Proje Açıklaması
