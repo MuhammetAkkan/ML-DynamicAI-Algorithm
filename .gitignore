@@ -18,6 +18,8 @@ env/
 .vscode/
 .idea/
 
+LINKEDIN_POST.md
+
 # Çeşitli
 .DS_Store
 *.log

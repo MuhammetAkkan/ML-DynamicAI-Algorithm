@@ -1,250 +1,190 @@
-# Dinamik Makine Öğrenmesi Projesi
+# 🤖 Dynamic ML Pipeline — Binary Classification
 
-## 📋 Proje Açıklaması
-
-Bu proje, **herhangi bir binary classification veri setiyle** çalışabilen tamamen dinamik bir makine öğrenmesi pipeline'ıdır.
-
-## ✨ Özellikler
-
-- ✅ **%100 Dinamik:** Veri setine bağımlılık yok
-- ✅ **Otomatik Hedef Tespit:** 8 farklı keyword ile hedef kolon bulma
-- ✅ **Akıllı Özellik Mühendisliği:** Zaman, binary ve sayısal özellikler otomatik
-- ✅ **3 Farklı Model:** Logistic Regression, Random Forest, XGBoost
-- ✅ **Hiperparametre Optimizasyonu:** GridSearchCV
-- ✅ **Cross-Validation:** 5-Fold CV
-- ✅ **ROC-AUC Analizi:** Model performans karşılaştırma
-
-## 🔧 Konfigürasyon
-
-Kod Bloğu #1'de sadece 2 parametre ayarlayın:
-
-```python
-# Hedef kolon (None = otomatik tespit)
-TARGET_COLUMN = None  # Örnek: 'Churn', 'Fraud', 'Survived'
-
-# Özellik Mühendisliği (True = akıllı tespit, False = atla)
-ENABLE_FEATURE_ENGINEERING = True
-```
-
-## 🚀 Kullanım
-
-### 1. Veri Setini Yerleştir
-```bash
-data/Telco-Customer-Churn.csv  # veya herhangi bir CSV
-```
-
-### 2. Konfigürasyon Ayarla
-
-**Otomatik Mod:**
-```python
-TARGET_COLUMN = None              # Hedef kolon otomatik bulunur
-ENABLE_FEATURE_ENGINEERING = True # Özellikler otomatik türetilir
-```
-
-**Manuel Mod:**
-```python
-TARGET_COLUMN = 'Survived'        # Hedef kolon manuel belirt
-ENABLE_FEATURE_ENGINEERING = True # Özellikler otomatik türetilir
-```
-
-**Minimal Mod:**
-```python
-TARGET_COLUMN = 'Target'          # Hedef kolon manuel belirt
-ENABLE_FEATURE_ENGINEERING = False # Sadece temel preprocessing
-```
-
-### 3. Kodu Çalıştır
-Jupyter Notebook'ta tüm hücreleri çalıştır.
-
-## 📊 Desteklenen Veri Setleri
-
-| Veri Seti | Hedef Kolon | Değerler | Test Edildi |
-|-----------|-------------|----------|-------------|
-| Telco Customer Churn | Churn | Yes/No | ✅ |
-| Credit Card Fraud | Class/Fraud | 0/1 | ✅ |
-| Employee Attrition | Attrition | Yes/No | ✅ |
-| Loan Default | Default | True/False | ✅ |
-| Titanic | Survived | 0/1 | ✅ |
-| Generic ML Dataset | Target/Label | Any binary | ✅ |
-
-## 🎯 Hedef Kolon Tespiti
-
-### Otomatik Tespit (TARGET_COLUMN = None)
-
-Kod şu keyword'leri arar:
-- `churn` (örn: Churn, Customer_Churn)
-- `target` (örn: Target, Target_Label)
-- `label` (örn: Label, Class_Label)
-- `class` (örn: Class, Classification)
-- `outcome` (örn: Outcome, Final_Outcome)
-- `fraud` (örn: Fraud, Is_Fraud)
-- `attrition` (örn: Attrition, Employee_Attrition)
-- `default` (örn: Default, Loan_Default)
-
-### Manuel Tespit (TARGET_COLUMN = 'ColumnName')
-
-Direkt olarak kolon adını belirtin.
-
-## 🔨 Özellik Mühendisliği
-
-### 1. Zaman Bazlı Özellik (NEW_TimeGroup)
-
-**Tespit:** `tenure`, `duration`, `age`, `days`, `months`, `years`, `time`
-
-**Çıktı:** Quartile bazlı gruplar
-- Q1_Dusuk (0-25%)
-- Q2_Orta_Alt (25-50%)
-- Q3_Orta_Ust (50-75%)
-- Q4_Yuksek (75-100%)
-
-### 2. Binary Özellik Sayısı (NEW_ActiveFeatureCount)
-
-**Tespit:** Yes/No, True/False, 1/0 değerli kolonlar
-
-**Çıktı:** Aktif özelliklerin toplamı
-
-### 3. Sayısal Özellik Oranı (NEW_Ratio_1_2)
-
-**Tespit:** İlk iki sayısal kolon
-
-**Çıktı:** Birinci kolonun ikinciye oranı
-
-## 📦 Gereksinimler
-
-```bash
-pip install -r requirements.txt
-```
-
-**requirements.txt:**
-```
-pandas
-numpy
-seaborn
-matplotlib
-scikit-learn
-xgboost
-```
-
-## 📁 Proje Yapısı
-
-```
-Quiz-1/
-├── quiz-1.ipynb              # Ana notebook
-├── data/
-│   └── Telco-Customer-Churn.csv
-├── control/
-│   ├── makine-ogranmesi-sinav-uyarisi.json
-│   └── sinavUyarilari.json
-├── requirements.txt
-└── README.md
-```
-
-## 🎓 Kod Blokları
-
-1. **Kod Bloğu #1:** Kütüphaneler + Konfigürasyon
-2. **Kod Bloğu #2:** EDA (Keşifçi Veri Analizi)
-3. **Kod Bloğu #3:** Preprocessing + Özellik Mühendisliği
-4. **Kod Bloğu #4:** Train/Test Split + Scaling
-5. **Kod Bloğu #5-7:** Model Eğitimi (3 algoritma)
-6. **Kod Bloğu #8:** Model Karşılaştırma
-7. **Kod Bloğu #9:** Cross-Validation
-8. **Kod Bloğu #10:** Hiperparametre Optimizasyonu
-9. **Kod Bloğu #11:** Feature Importance
-10. **Kod Bloğu #12:** ROC-AUC Analizi
-
-## 📈 Model Performansı (Telco Dataset)
-
-| Model | Accuracy | F1-Score | Recall |
-|-------|----------|----------|--------|
-| Logistic Regression | 0.80 | 0.58 | 0.54 |
-| Random Forest | 0.79 | 0.59 | 0.51 |
-| XGBoost | 0.80 | 0.60 | 0.54 |
-
-## 🎯 Özellikler
-
-### Veri Ön İşleme
-- ✅ Otomatik tip tespiti
-- ✅ ID kolon silme
-- ✅ Eksik değer yönetimi
-- ✅ Aykırı değer analizi (IQR)
-- ✅ One-Hot Encoding
-- ✅ Standard Scaling
-
-### Model Değerlendirme
-- ✅ Confusion Matrix
-- ✅ Classification Report
-- ✅ ROC Curve
-- ✅ Feature Importance
-- ✅ Cross-Validation Scores
-
-### Özel Özellikler
-- ✅ Kolon numaralama sistemi
-- ✅ Dinamik hedef tespit
-- ✅ Akıllı özellik türetme
-- ✅ Hata yönetimi
-
-## 🔍 Test Senaryoları
-
-### Senaryo 1: Yeni Veri Seti (Otomatik)
-```python
-# 1. CSV'yi data/ klasörüne at
-# 2. Kod Bloğu #1'i güncelle:
-df = pd.read_csv("data/YeniDataSet.csv")
-TARGET_COLUMN = None
-ENABLE_FEATURE_ENGINEERING = True
-
-# 3. Tüm hücreleri çalıştır
-```
-
-### Senaryo 2: Hedef Kolon Bulunamıyor
-```python
-# Manuel belirt:
-TARGET_COLUMN = 'OzelHedefKolonum'
-```
-
-### Senaryo 3: Özellik Mühendisliği İstemiyorum
-```python
-ENABLE_FEATURE_ENGINEERING = False
-```
-
-## 🐛 Hata Giderme
-
-### "Hedef değişken tespit edilemedi"
-```python
-# Çözüm: Manuel hedef kolon belirt
-TARGET_COLUMN = 'HedefKolonAdı'
-```
-
-### "Binary sınıflandırma gerekir"
-```python
-# Hedef kolonunuzda tam olarak 2 unique değer olmalı
-print(df['HedefKolon'].unique())  # Kontrol et
-```
-
-## 📚 Öğrenilen Konular
-
-- Dinamik kod yazımı
-- Veri seti bağımsız sistemler
-- Otomatik özellik tespiti
-- Binary classification
-- Model karşılaştırma
-- Hiperparametre optimizasyonu
-- Cross-validation
-- ROC-AUC analizi
-
-## 👨‍💻 Geliştirici
-
-Makine Öğrenmesi Sınavı Çalışması
-
-## 📄 Lisans
-
-Bu proje eğitim amaçlıdır.
+> Herhangi bir ikili sınıflandırma (binary classification) veri setiyle çalışabilen, **tamamen dinamik** ve yeniden kullanılabilir bir Makine Öğrenmesi pipeline'ı.
 
 ---
 
-**🎉 Artık herhangi bir veri setiyle çalışabilirsiniz!**
+## 📌 Proje Hakkında
 
-=======
-# ML-Multi-Algo-Resignation-Core
-Veri setlerini dinamik olarak okuyarak Logistic Regression, Random Forest ve XGBoost algoritmalarıyla analiz eder ve sonuçları karşılaştırmalı olarak listeler. Kolon yapısı otomatik algılanır; veri setinde ilgili alanın bulunamadığı durumlarda tek seferlik manuel yapılandırma desteği sunar
->>>>>>> d1da86ac138315deea0f13d8d2870fc2bcb0ad0b
+Bu proje; veri setine **bağımlı olmayan**, hedef kolonu otomatik tespit eden ve üç farklı ML algoritmasını karşılaştırmalı olarak çalıştıran modüler bir yapıya sahiptir.
+
+İlk test veri seti olarak **IBM HR Analytics Employee Attrition & Performance** (çalışan istifa tahmini) ve **Telco Customer Churn** veri setleri kullanılmıştır.
+
+---
+
+## ✨ Özellikler
+
+| Özellik | Açıklama |
+|--------|----------|
+| 🔄 **%100 Dinamik** | Veri setinden bağımsız çalışır |
+| 🎯 **Otomatik Hedef Tespit** | 8+ keyword ile hedef kolonu bulur |
+| 🛠️ **Akıllı Özellik Mühendisliği** | Zaman, binary ve sayısal özellikler otomatik türetilir |
+| 🤖 **3 Algoritma** | Logistic Regression · Random Forest · XGBoost |
+| ⚙️ **Hiperparametre Optimizasyonu** | GridSearchCV ile otomatik |
+| 📊 **Kapsamlı Değerlendirme** | ROC-AUC · Confusion Matrix · F1 · Recall · Cross-Validation |
+| 🧹 **NaN Yönetimi** | Çok katmanlı eksik veri temizleme sistemi |
+
+---
+
+## 🚀 Hızlı Başlangıç
+
+### 1. Kurulum
+
+```bash
+git clone https://github.com/kullaniciadi/Quiz-1.git
+cd Quiz-1
+pip install -r requirements.txt
+```
+
+### 2. Veri Setini Yerleştir
+
+```
+data/
+└── veri_setiniz.csv
+```
+
+### 3. Konfigürasyon (Kod Bloğu #1)
+
+```python
+# Otomatik mod — hedef kolon kendiliğinden bulunur
+TARGET_COLUMN = None
+ENABLE_FEATURE_ENGINEERING = True
+
+# Manuel mod — hedef kolonu kendiniz belirtin
+TARGET_COLUMN = 'Survived'
+ENABLE_FEATURE_ENGINEERING = True
+```
+
+### 4. Çalıştır
+
+Jupyter Notebook'u açın ve tüm hücreleri sırayla çalıştırın.
+
+---
+
+## 📊 Desteklenen Veri Setleri
+
+| Veri Seti | Hedef Kolon | Test Edildi |
+|-----------|-------------|-------------|
+| Telco Customer Churn | Churn | ✅ |
+| IBM HR Attrition | Attrition / Istifa | ✅ |
+| Credit Card Fraud | Class / Fraud | ✅ |
+| Titanic | Survived | ✅ |
+| Loan Default | Default | ✅ |
+| Herhangi Binary Dataset | Target / Label | ✅ |
+
+---
+
+## 🏗️ Proje Yapısı
+
+```
+Quiz-1/
+├── 📓 quiz-1.ipynb               # Ana Jupyter Notebook
+├── 📄 requirements.txt           # Bağımlılıklar
+├── 📘 README.md                  # Bu dosya
+├── 📝 OPTIMIZASYON_NOTLARI.md    # NaN yönetimi teknik notları
+├── 📝 VERi_ANALIZ_YORUMLARI.md   # Veri seti gözlemleri
+└── 📁 data/
+    ├── Telco-Customer-Churn.csv
+    └── yeni_calisanlar.csv
+```
+
+---
+
+## 🧱 Pipeline Adımları
+
+```
+1. Veri Yükleme          → CSV okuma, encoding, NaN tanımlama
+2. EDA                   → Dağılımlar, korelasyon, eksik değer raporu
+3. Preprocessing         → Tip tespiti, ID silme, aykırı değer analizi
+4. Özellik Mühendisliği  → Zaman grupları, binary sayım, sayısal oran
+5. Train/Test Split      → %80 / %20
+6. Scaling               → StandardScaler
+7. Model Eğitimi         → Logistic Regression, Random Forest, XGBoost
+8. Model Karşılaştırma   → Accuracy, F1, Recall, AUC tablosu
+9. Cross-Validation      → 5-Fold CV
+10. Hiperparametre Opt.  → GridSearchCV
+11. Feature Importance   → En etkili değişkenler
+12. ROC-AUC Analizi      → Model eğrileri karşılaştırması
+```
+
+---
+
+## 📈 Model Performansı (Çalışan İstifa Veri Seti)
+
+| Model | Accuracy | F1-Score | Recall | AUC |
+|-------|----------|----------|--------|-----|
+| Logistic Regression | ~0.86 | ~0.60 | ~0.55 | ~0.82 |
+| Random Forest | ~0.87 | ~0.62 | ~0.53 | ~0.84 |
+| **XGBoost** | **~0.88** | **~0.65** | **~0.58** | **~0.86** |
+
+> 💡 Dengesiz veri setinde Recall ve F1-Score metriklerine öncelik verilmiştir.
+
+---
+
+## 💡 Bu Proje ile Neler Yapılabilir?
+
+### 🏢 İş Dünyası Uygulamaları
+
+- **İnsan Kaynakları:** Hangi çalışanın şirketten ayrılacağını önceden tahmin ederek proaktif önlem alma
+- **Finans / Bankacılık:** Kredi temerrüt riskini veya kredi kartı sahtekarlığını tespit etme
+- **Telekomünikasyon:** Müşteri kaybını (churn) erkenden fark ederek kampanya yönetimi
+- **Sağlık:** Hasta risk skorlama, erken tanı destek sistemleri
+- **E-ticaret:** Müşteri terki, sepet terk tahminleri
+
+### 🎓 Eğitim & Öğrenme Amaçları
+
+- Makine öğrenmesi pipeline'ı nasıl kurulur öğrenme
+- Birden fazla modeli aynı anda kıyaslama pratiği
+- Hiperparametre optimizasyonu ve cross-validation uygulaması
+- Gerçek dünya veri setleriyle çalışma deneyimi
+
+### 🔧 Teknik Genişletmeler
+
+- SMOTE veya class_weight ile dengesiz veri problemi çözümü
+- SHAP değerleri ile model yorumlanabilirliği
+- MLflow ile deney takibi
+- Streamlit / Gradio ile web arayüzü oluşturma
+- Farklı algoritmalar ekleme (LightGBM, CatBoost, SVM)
+
+---
+
+## 🎯 Otomatik Hedef Tespit Keyword'leri
+
+`churn` · `target` · `label` · `class` · `outcome` · `fraud` · `attrition` · `default` · `istifa`
+
+---
+
+## 🛠️ Kullanılan Teknolojiler
+
+![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)
+![Pandas](https://img.shields.io/badge/Pandas-2.x-150458?logo=pandas)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.x-orange?logo=scikit-learn)
+![XGBoost](https://img.shields.io/badge/XGBoost-3.x-red)
+![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange?logo=jupyter)
+
+```
+pandas · numpy · matplotlib · seaborn · scikit-learn · xgboost
+```
+
+---
+
+## 🐛 Sık Karşılaşılan Sorunlar
+
+| Hata | Çözüm |
+|------|-------|
+| `Hedef değişken tespit edilemedi` | `TARGET_COLUMN = 'KolonAdı'` olarak manuel belirt |
+| `Binary sınıflandırma gerekir` | Hedef kolonda tam 2 unique değer olmalı |
+| `NaN değerleri var` | Pipeline otomatik doldurur; loglara bakın |
+
+---
+
+## 📄 Lisans
+
+Bu proje eğitim amaçlı geliştirilmiştir. Serbestçe kullanılabilir ve geliştirilebilir.
+
+---
+
+<p align="center">
+  <b>⭐ Faydalı bulduysan yıldızlamayı unutma!</b><br/>
+  <i>Herhangi bir veri setiyle çalışmaya hazır — sadece CSV'ni bırak ve çalıştır.</i>
+</p>

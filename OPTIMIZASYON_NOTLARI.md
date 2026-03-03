@@ -1,97 +1,88 @@
-# NaN Optimizasyonları - Quiz-1
+# 🧹 NaN Optimizasyon Notları
 
-## Yapılan Optimizasyonlar
+Bu dokümanda pipeline'ın eksik veri (NaN) yönetimi için uyguladığı çok katmanlı temizleme stratejisi açıklanmaktadır.
 
-### 1. CSV Okuma İyileştirmesi
+---
+
+## 🔄 NaN Temizleme Akışı
+
+```
+CSV Okuma (na_values genişletilmiş)
+        ↓
+📋 İlk NaN Raporu (yüzdelik oranlar)
+        ↓
+🔢 Sayısal Dönüşüm Hataları → medyan / 0
+        ↓
+🎯 Hedef Değişken → mod (sınıf dengesi korunur)
+        ↓
+🏷️  Kategorik Kolonlar → mod / 'Unknown'
+        ↓
+✅ Final Kontrol → Kalan tüm NaN'lar temizlenir
+        ↓
+🔀 X-y Ayrımı → Son güvenlik kontrolü
+        ↓
+🤖 Model Eğitimi (NaN = 0 garantisi)
+```
+
+---
+
+## ⚙️ Uygulanan Optimizasyonlar
+
+### 1. Gelişmiş CSV Okuma
+
 ```python
-df = pd.read_csv("data/yeni_calisanlar.csv", 
-                 sep=';',                          # Noktalı virgül ayracı
-                 encoding='utf-8',                  # Türkçe karakter desteği
-                 na_values=['', ' ', 'NA', 'N/A', 'nan', 'NaN', 'null'],  # NaN tanımlama
-                 keep_default_na=True,              # Varsayılan NaN değerlerini koru
-                 skipinitialspace=True)             # Baştaki boşlukları temizle
+df = pd.read_csv("data/yeni_calisanlar.csv",
+                 sep=';',
+                 encoding='utf-8',
+                 na_values=['', ' ', 'NA', 'N/A', 'nan', 'NaN', 'null'],
+                 keep_default_na=True,
+                 skipinitialspace=True)
 ```
 
-### 2. Hedef Kolon Ayarı
-- `TARGET_COLUMN = 'Istifa'` olarak ayarlandı
-- NaN değerleri otomatik olarak mod (en sık görülen değer) ile doldurulur
-- Türkçe keyword desteği eklendi: 'evet', 'istifa'
+| Parametre | Amaç |
+|-----------|------|
+| `sep=';'` | Noktalı virgül ayracını destekler |
+| `encoding='utf-8'` | Türkçe karakter sorunlarını çözer |
+| `na_values=[...]` | Boş string, whitespace, 'NA' vb. otomatik NaN'a çevrilir |
+| `skipinitialspace=True` | Baştaki boşluklardan kaynaklanan hataları önler |
 
-### 3. NaN Kontrol ve Temizleme Noktaları
+---
 
-#### a) Veri Yükleme Sonrası (Kod Bloğu #2)
-- Tüm kolonlardaki NaN değerler tespit edilir
-- Detaylı rapor ile yüzdelik oranlar gösterilir
+### 2. Kontrol Noktaları
 
-#### b) Uyumsuz Kolonlar (Kod Bloğu #3.2)
-- Sayıya dönüştürme sırasında oluşan NaN'lar medyan ile doldurulur
-- Tüm değerler NaN ise 0 kullanılır
-- Dönüşüm kaynaklı NaN sayısı ayrıca raporlanır
+| Aşama | Strateji |
+|-------|----------|
+| Veri yükleme sonrası | Tüm kolonlar taranır, yüzdelik NaN raporu üretilir |
+| Sayısal dönüşüm | Dönüşüm kaynaklı NaN → **medyan** (ya da 0) |
+| Hedef değişken | NaN → **mod** (sınıf dengesini korur) |
+| Kategorik kolonlar | One-Hot öncesi → **mod** / `'Unknown'` |
+| Final kontrol | Kalan her NaN sayısal ise medyan, kategorik ise mod ile doldurulur |
+| X-y ayrımı | Model eğitimi öncesi son güvenlik katmanı |
 
-#### c) Hedef Değişken (Kod Bloğu #3.3)
-- Hedef kolondaki NaN'lar mod ile doldurulur
-- String-numeric dönüşümü sonrası NaN kontrolü
-- Otomatik tespit için 'istifa' keyword'ü eklendi
+---
 
-#### d) Kategorik Veriler (Kod Bloğu #3.4)
-- One-Hot Encoding öncesi NaN kontrolü
-- Her kategorik kolon için mod ile doldurma
-- Detaylı raporlama
+### 3. Türkçe Veri Seti Desteği
 
-#### e) Final Kontrol (Kod Bloğu #3 Sonu)
-- Tüm veri seti taranır
-- Kalan NaN'lar:
-  - Sayısal kolonlar → medyan (veya 0)
-  - Kategorik kolonlar → mod (veya 'Unknown')
-- Son NaN sayısı: 0 garantisi
+- `TARGET_COLUMN = 'Istifa'` olarak ayarlandığında otomatik tanınır
+- `'Evet'` → `1`, `'Hayır'` → `0` dönüşümü otomatik yapılır
+- Otomatik hedef tespit listesine `'evet'` ve `'istifa'` keyword'leri eklenmiştir
 
-#### f) X-y Ayrımı (Kod Bloğu #4)
-- Model eğitimi öncesi son kontrol
-- X ve y'de ayrı ayrı NaN kontrolü
-- Güvenlik için 0 ile doldurma
+---
 
-### 4. İyileştirmeler
+## 📋 NaN Doldurma Stratejileri Özeti
 
-1. **Akıllı NaN Tespiti**: Boş string, whitespace, 'NA', 'N/A' gibi değerler otomatik NaN'a çevrilidir
-2. **Türkçe Karakter Desteği**: UTF-8 encoding ile sorunsuz okuma
-3. **Detaylı Raporlama**: Her aşamada NaN sayısı ve işlem bilgisi
-4. **Çoklu Strateji**: 
-   - Sayısal → medyan/0
-   - Kategorik → mod/'Unknown'
-   - Hedef → mod (sınıf dengesini korur)
-5. **Güvenlik Kontrolleri**: Her kritik noktada NaN doğrulaması
+| Kolon Tipi | Strateji | Neden? |
+|------------|----------|--------|
+| Sayısal | Medyan | Aykırı değerlere duyarsız |
+| Kategorik | Mod | En sık görülen değeri korur |
+| Hedef değişken | Mod | Sınıf dengesini bozmaz |
+| Tüm değerler NaN | 0 / 'Unknown' | Son çare |
 
-## Veri Akışı
+---
 
-```
-CSV Okuma (na_values ile)
-    ↓
-İlk NaN Raporu
-    ↓
-Uyumsuz Kolonlar → medyan/0
-    ↓
-Hedef Değişken → mod
-    ↓
-Kategorik → mod/'Unknown'
-    ↓
-Final Kontrol → Kalan NaN'ları temizle
-    ↓
-X-y Ayrımı → Son güvenlik kontrolü
-    ↓
-Model Eğitimi (NaN=0 garantili)
-```
+## ✅ Güvenceler
 
-## Test Önerileri
-
-1. Kodu çalıştırın ve her "NaN KONTROLÜ" çıktısını inceleyin
-2. "TEMİZLEME SONRASI VERİ" bölümünde NaN=0 olmalı
-3. Hedef değişken dağılımını kontrol edin
-4. Model doğruluğunu önceki versiyonla karşılaştırın
-
-## Önemli Notlar
-
-- ⚠️ Tüm NaN değerler otomatik olarak doldurulur
-- ✓ Veri bütünlüğü korunur (satır silinmez)
-- ✓ Hedef değişken: 'Istifa' → 'Evet'=1, 'Hayır'=0
-- ✓ Aykırı değerler silinmez (model performansı için)
-
+- ⛔ Hiçbir satır silinmez → Veri bütünlüğü korunur
+- ✅ Model eğitimine giren veride NaN = 0 garantisi
+- ✅ Her aşamada detaylı loglama
+- ✅ Aykırı değerler silinmez (model kendi öğrenir)

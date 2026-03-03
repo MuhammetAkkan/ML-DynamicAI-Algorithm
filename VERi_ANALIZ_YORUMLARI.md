@@ -1,112 +1,95 @@
-# 📊 Veri Seti Hakkında Basit Yorumlar
+# 📊 Veri Seti Analiz Yorumları
 
-## Genel Bakış
-- **Toplam Kayıt:** 1471 çalışan
-- **Toplam Özellik:** 21 kolon
-- **Hedef Değişken:** Istifa (Evet/Hayır)
+> **Veri Seti:** IBM HR Analytics — Çalışan İstifa Tahmini  
+> **Kayıt Sayısı:** 1.471 çalışan · **Özellik Sayısı:** 21 kolon · **Hedef:** `Istifa` (Evet / Hayır)
 
 ---
 
-## 🔍 Basit Gözlemler
+## 🔍 Keşifsel Veri Analizi (EDA) Gözlemleri
 
-### 1. Departmanlar
-- **En yaygın:** Araştırma ve Geliştirme (çok fazla)
-- **Diğerleri:** Satış, İnsan Kaynakları
-- **Yorum:** Şirket teknoloji/AR-GE ağırlıklı görünüyor
+### 1. Departman Dağılımı
+- **Baskın departman:** Araştırma & Geliştirme
+- Satış ve İnsan Kaynakları departmanları daha küçük
+- 📌 Şirket profili teknoloji / AR-GE ağırlıklı görünüyor
 
 ### 2. Yaş Dağılımı
-- **Gençler:** 21-30 yaş arası çok var
-- **Orta yaş:** 30-45 arası yoğun
-- **Yaşlılar:** 50+ az
-- **Yorum:** Genç bir çalışan profili var
+- 21–30 yaş aralığında yoğunlaşma var
+- 50+ yaş grubu oldukça az
+- 📌 **Genç ve dinamik** bir çalışan profili
 
-### 3. Maaş (Aylık Gelir)
-- **Düşük:** 1000-3000 TL arası çok fazla
-- **Orta:** 4000-10000 TL arası
-- **Yüksek:** 15000+ TL çok az
-- **Yorum:** Genel olarak düşük-orta gelirli çalışanlar
+### 3. Aylık Gelir
+- Büyük çoğunluk düşük-orta gelir bandında (1.000–5.000 arası)
+- Yüksek gelir grubu (15.000+) çok az
+- 📌 Maaş dağılımı sağa çarpık — potansiyel istifa tetikleyicisi
 
 ### 4. Fazla Mesai
-- **Evet yapanlar:** Oldukça fazla
-- **Hayır diyenler:** Daha az
-- **Yorum:** Fazla mesai şirkette yaygın
+- Çalışanların önemli bir kısmı fazla mesai yapıyor
+- 📌 Fazla mesai → tükenmişlik → istifa zinciri model tarafından öğrenilebilir
 
-### 5. İstifa Durumu (Hedef)
-- **Hayır (Kalan):** Çoğunluk
-- **Evet (Ayrılan):** Azınlık
-- **Yorum:** Normal bir işten ayrılma oranı (dengesiz veri)
+### 5. Hedef Değişken (İstifa Dengesi)
+- **Hayır (Kalan):** ~%84
+- **Evet (Ayrılan):** ~%16
+- 📌 **Dengesiz sınıf** → Recall ve F1-Score odaklı değerlendirme gerektirir
 
-### 6. Eğitim Alanları
-- **En yaygın:** Yaşam Bilimleri
-- **Diğerleri:** Tıp, Pazarlama, Teknik Derece
-- **Yorum:** Biyoteknoloji/sağlık şirketi olabilir
+### 6. Eğitim Alanı
+- En yaygın: Yaşam Bilimleri, ardından Tıp ve Pazarlama
+- 📌 Biyoteknoloji / sağlık sektörü profiliyle örtüşüyor
 
 ### 7. Medeni Durum
-- **Bekar:** Çok fazla
-- **Evli:** Orta düzeyde
-- **Boşanmış:** Az
-- **Yorum:** Genç ve bekar çalışan çoğunlukta
+- Bekar çalışanlar çoğunlukta
+- 📌 Bekar + genç kombinasyonu → daha yüksek hareket kabiliyeti
 
 ### 8. İş Seyahati
-- **Nadiren Seyahat:** En yaygın
-- **Sık Seyahat:** Orta
-- **Seyahat Etmiyor:** Az
-- **Yorum:** Çoğu çalışan ara sıra seyahat ediyor
+- "Nadiren seyahat" en yaygın kategori
+- Sık seyahat edenler azınlıkta ama istifa oranı yüksek olabilir
 
 ### 9. Şirketteki Yıl
-- **Yeni (0-2 yıl):** Çok fazla
-- **Tecrübeli (5+ yıl):** Orta
-- **Eski (10+ yıl):** Az
-- **Yorum:** Yüksek personel devri olabilir
+- 0–2 yıllık çalışanlar baskın grup
+- 📌 Yeni işe girenlerde yüksek işten ayrılma eğilimi — **erken uyarı sistemi** kurulabilir
 
 ### 10. Evden Uzaklık
-- **Yakın (1-5 km):** Çok
-- **Orta (5-15 km):** Orta
-- **Uzak (15+ km):** Az
-- **Yorum:** Çalışanlar genelde yakında oturuyor
+- Çalışanların büyük çoğunluğu 1–10 km mesafede
+- Uzak mesafeli çalışanlar küçük grup ama yorgunluk riski yüksek
 
 ---
 
-## ⚠️ Dikkat Edilmesi Gerekenler
+## ⚠️ İstifa Tahmininde Kritik Özellikler
 
-### İstifa Tahmininde Önemli Olabilecek Özellikler:
-1. **Fazla Mesai** → Evet yapanlar daha çok istifa edebilir
-2. **İş Memnuniyeti** → Düşük olanlar risk altında
-3. **Maaş Artış Yüzdesi** → Düşük artış alanlar gidebilir
-4. **Son Terfi Süresi** → Uzun süre terfi almayanlar riskli
-5. **İş-Yaşam Dengesi** → Kötü olduğunda istifa riski artar
-6. **Toplam Çalışma Yılı** → Çok tecrübeli olanlar başka fırsatlara açık
-7. **Şirketteki Yıl** → 0-1 yıl olanlar hemen gidebilir
-8. **Evden Uzaklık** → Çok uzakta olanlar yorulup gidebilir
-
----
-
-## 📈 Model İçin Beklentiler
-
-### Dengesiz Veri
-- İstifa eden az, kalan çok
-- Model "Hayır" demeye meyilli olabilir
-- F1-score ve recall metriklerine bakmak önemli
-
-### Kategorik Özellikler Çok
-- One-hot encoding sonrası kolon sayısı artacak
-- Departman, Eğitim Alanı, Medeni Durum → Binary kolonlara dönüşecek
-
-### Korelasyonlar
-- İş memnuniyeti + Ortam memnuniyeti → Birbiriyle ilişkili olabilir
-- Toplam çalışma yılı + Yaş → Pozitif korelasyon beklenir
-- Şirketteki yıl + Mevcut müdürle yıl → İlişkili olabilir
+| Özellik | Beklenen Etki |
+|---------|--------------|
+| **Fazla Mesai** | ↑ Evet → ↑ İstifa riski |
+| **İş Memnuniyeti** | ↓ Düşük skor → ↑ Risk |
+| **Maaş Artış Yüzdesi** | ↓ Düşük artış → ↑ Risk |
+| **Son Terfi Süresi** | ↑ Uzun süre → ↑ Risk |
+| **İş-Yaşam Dengesi** | ↓ Kötü denge → ↑ Risk |
+| **Şirketteki Yıl** | 0–1 yıl → Yüksek risk |
+| **Evden Uzaklık** | ↑ Uzak → ↑ Yorgunluk |
+| **Toplam Çalışma Yılı** | Çok tecrübeli → dışarıdan teklif alabilir |
 
 ---
 
-## ✅ Sonuç
+## 📈 Modelleme Notları
 
-Bu veri seti **çalışan istifa tahmini** için uygundur.
-- Yeterli kayıt var (1471 satır)
-- Hedef değişken açık (Istifa)
-- Özellikler anlamlı ve gerçekçi
-- Makine öğrenmesi modeli başarılı sonuç verebilir
+### Dengesiz Veri Problemi
+- Hedef sınıf oranı ~84/16 → Model "Hayır" demeye meyilli olabilir
+- **Çözüm:** `class_weight='balanced'` veya SMOTE uygulaması önerilir
+- Metrik önceliği: `Recall` > `F1-Score` > `Accuracy`
 
-**Beklenen Model Başarısı:** %75-85 accuracy
-**Kritik Metrik:** Recall (istifa edecekleri yakalama oranı)
+### Kategorik Özellikler
+- One-Hot Encoding sonrası kolon sayısı artacak
+- `Departman`, `Eğitim Alanı`, `Medeni Durum` → Binary kolonlara dönüşür
 
+### Beklenen Korelasyonlar
+- `Toplam Çalışma Yılı` ↔ `Yaş` → Pozitif
+- `İş Memnuniyeti` ↔ `Ortam Memnuniyeti` → İlişkili olabilir
+- `Şirketteki Yıl` ↔ `Mevcut Müdürle Yıl` → Paralel gidebilir
+
+---
+
+## 💼 İş Değeri
+
+Bu analiz sonucunda şirket yönetimine sunulabilecek çıktılar:
+
+- 🔴 **Yüksek Risk Listesi:** Model tahminlerine göre istifa edebilecek çalışanlar
+- 📊 **Departman Bazlı Risk Raporu:** Hangi bölümde istifa riski daha yüksek
+- 🛠️ **Aksiyon Önerileri:** Fazla mesai düzenlemesi, maaş revizyonu, terfi planlaması
